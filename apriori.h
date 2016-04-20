@@ -109,16 +109,22 @@ void Tries::init(){
     strcpy(cstr, tmp.c_str());
     for (char *token=strtok(cstr," ");token;token=strtok(0," ")){
       int wordid = atoi(token);
-      words.insert(wordid);
-      if(fq.find(wordid) == fq.end()){
-        fq[wordid] = 1;
-      }else{
-        fq[wordid] = fq[wordid] + 1;
+      if(wordid > 0){
+        words.insert(wordid);
+        if(fq.find(wordid) == fq.end()){
+          fq[wordid] = 1;
+        }else{
+          fq[wordid] = fq[wordid] + 1;
+        }
+
       }
     }
   }
   set<int>::iterator it = words.begin();
-  if(it != words.end() && fq[*it] > minsupp){
+  while(it != words.end() && fq[*it] < minsupp){
+    it++;
+  }
+  if(it != words.end()){ 
     depth++;
     root->son = new Node(*it,fq[*it],1,root);
     term.insert(*it);
@@ -126,7 +132,7 @@ void Tries::init(){
   }
   Node* now = root->son;
   for (; it!=words.end(); ++it){
-    if(fq[*it] > minsupp){
+    if(fq[*it] >= minsupp){
       now->next = new Node(*it,fq[*it],1,root);
       term.insert(*it);
       now = now->next;
@@ -201,7 +207,7 @@ void Tries::print(){
         }
         for (vector<int>::iterator it=tmp.begin();it!=tmp.end();++it)
           out<<*it<<" ";
-        out<<now->label<<" "<<now->fq<<endl;
+        out<<now->label<<":"<<now->fq<<endl;
         now = now->next;
       }
     }

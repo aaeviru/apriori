@@ -9,9 +9,6 @@ int main(int argc,char** argv){
   test.print();
   test.grow();
   test.search();
-  test.grow();
-  test.search();
-
   test.print();
   return 0;
 }
