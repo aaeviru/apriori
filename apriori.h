@@ -172,7 +172,7 @@ void Tries::search(){
 }
 
 void Tries::print(){
-  out<<"depth:"<<depth<<endl;
+  cout<<"depth:"<<depth<<endl;
   Node* now = root->son;
   Node* old = root;
   vector<int> tmp;
@@ -180,7 +180,7 @@ void Tries::print(){
     if(now == NULL){
       while(old->next == NULL){
         if(old == root){
-          out<<"print over"<<endl;
+          cout<<"print over"<<endl;
           return;
         } 
         tmp.pop_back();
@@ -206,7 +206,7 @@ void Tries::print(){
       }
     }
   }
-  out<<"print over"<<endl;
+  cout<<"print over"<<endl;
 }
 
 void Tries::check(){
